@@ -2,7 +2,7 @@ from flask import request
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
-from app.models import db, Book, User, Author
+from app.models import db, Student, Group
 
 
 # class UsersResource(Resource):
@@ -17,71 +17,67 @@ from app.models import db, Book, User, Author
 #             }
 #         return {'success': False}
 
-
-class BooksResource(Resource):
-    @jwt_required()
+class GroupsResource(Resource):
     def get(self):
-        result = Book.query.all()
-        return [b.to_dict() for b in result]
+        result = Group.query.all()
+        return [g.to_dict() for g in result]
 
     def post(self):
         data = request.get_json()
-        db.session.add(Book(title=data['title'], author=data['author']))
+        db.session.add(Group(name=data['name'], year=data['year'], status=data['status']))
         db.session.commit()
         return {'success': True}
 
+class GroupResource(Resource):
+    def get(self, group_id):
+        group = Group.query.get_or_404(group_id)
+        return group.to_dict()
 
-class BookResource(Resource):
-    def get(self, book_id):
-        book = Book.query.get_or_404(book_id)
-        return book.to_dict()
-
-    def put(self, book_id):
+    def put(self, group_id):
         data = request.get_json()
-        book = Book.query.get(book_id)
-        book.title = data.get('title')
-        book.author = data.get('author')
-        db.session.add(book)
+        group = Group.query.get(group_id)
+        group.name = data.get('name')
+        group.year = data.get('year')
+        group.status = data.get('status')
+        db.session.add(group)
         db.session.commit()
         return {'success': True}
 
-    def delete(self, book_id):
-        book = Book.query.get(book_id)
-        db.session.delete(book)
+    def delete(self, group_id):
+        group = Group.query.get(group_id)
+        db.session.delete(group)
         db.session.commit()
         return {'success': True}
 
-
-class AuthorsResource(Resource):
-    @jwt_required()
+class StudentsResource(Resource):
     def get(self):
-        result = Author.query.all()
-        return [b.to_dict() for b in result]
+        result = Student.query.all()
+        return [s.to_dict() for s in result]
 
     def post(self):
         data = request.get_json()
-        db.session.add(Author(last_name=data['last_name'], first_name=data['first_name'], second_name=data['second_name']))
+        db.session.add(Student(last_name=data['last_name'], first_name=data['first_name'], second_name=data['second_name'], stud_id=data['stud_id']))
         db.session.commit()
         return {'success': True}
 
+class StudentResource(Resource):
+    def get(self, student_id):
+        student = Student.query.get_or_404(student_id)
+        return student.to_dict()
 
-class AuthorResource(Resource):
-    def get(self, author_id):
-        author = Author.query.get_or_404(author_id)
-        return author.to_dict()
-
-    def put(self, author_id):
+    def put(self, student_id):
         data = request.get_json()
-        author = Author.query.get(author_id)
-        author.last_name = data.get('last_name')
-        author.first_name = data.get('first_name')
-        author.second_name = data.get('second_name')
-        db.session.add(author)
+        student = Student.query.get(student_id)
+        student.last_name = data.get('last_name')
+        student.first_name = data.get('first_name')
+        student.second_name = data.get('second_name')
+        student.stud_id = data.get('stud_id')
+        db.session.add(student)
         db.session.commit()
         return {'success': True}
 
-    def delete(self, author_id):
-        author = Author.query.get(author_id)
-        db.session.delete(author)
+    def delete(self, student_id):
+        student = Student.query.get(student_id)
+        db.session.delete(student)
         db.session.commit()
         return {'success': True}
