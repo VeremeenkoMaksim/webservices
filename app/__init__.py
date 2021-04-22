@@ -17,7 +17,7 @@ def create_app():
 
     app.config['SECRET_KEY'] = 'abc'
     app.config['JWT_SECRET_KEY'] = 'abc'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///university.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config.from_envvar('APP_CONFIG', True)
 
