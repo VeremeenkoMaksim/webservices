@@ -13,7 +13,7 @@
 <div id="app">
     <div class="container">
         <div class="row">
-            <div class="col" v-else>
+            <div class="col">
                 <table class="table">
                     <thead>
                     <tr>
@@ -67,6 +67,7 @@ var app = new Vue({
   data: {
     students: [],
     groups: [],
+    temp: [],
     message: 'Hello from Vue!'
   },
   methods: {
@@ -88,9 +89,20 @@ var app = new Vue({
           console.log(error);
         });
     },
-  mounted() {
-    this.refreshGroups();
-    this.refreshStudents();
+    testGroup: function() {
+        axios.get('/group/<int:group_id>')
+          .then((response) => {
+            this.temp = response.data;
+          })
+          .catch((error) => {
+          console.log(error);
+        });
+    }
+  },
+    mounted() {
+        this.refreshGroups();
+        this.refreshStudents();
+        this.testGroup();
   }
 });
 
