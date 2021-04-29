@@ -8,6 +8,8 @@ from flask_restful import Api
 from app.api import GroupsResource, GroupResource, StudentResource, StudentsResource
 from app.models import db, Student, Group
 
+def create_student():
+    return 0
 
 def send_client(filename='index.html'):
     return send_from_directory('static', filename)
@@ -30,6 +32,7 @@ def create_app():
 
     JWTManager(app)
 
+    app.add_url_rule('/createStudent', view_func=create_student, methods=['POST'])
     app.add_url_rule('/', view_func=send_client)
     app.add_url_rule('/<path:filename>', view_func=send_client)
 
@@ -37,6 +40,6 @@ def create_app():
     api.add_resource(GroupsResource, '/group/')
     api.add_resource(GroupResource, '/group/<int:group_id>/')
     api.add_resource(StudentsResource, '/student/')
-    api.add_resource(StudentResource, '/author/<int:student_id>/')
+    api.add_resource(StudentResource, '/student/<int:student_id>/')
 
     return app

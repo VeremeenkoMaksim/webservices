@@ -24,15 +24,18 @@
                     </thead>
                     <tbody>
                     <tr v-for="group in groups">
+                        <td><input type="button" value="Read"></input></td>
                         <th scope="row">{{ group.name }}</th>
                         <td>{{ group.year }}</td>
                         <td>{{ group.status }}</td>
                     </tr>
                     </tbody>
                 </table>
+                 <form v-on:submit.prevent="readStudent">
                 <table class="table">
                     <thead>
                     <tr>
+                        <th scope="col"></th>
                         <th scope="col">First name</th>
                         <th scope="col">Last name</th>
                         <th scope="col">Second name</th>
@@ -42,17 +45,35 @@
                     </thead>
                     <tbody>
                     <tr v-for="student in students">
+                            <td><input type="submit" value="Read" ></input></td>
                         <th scope="row">{{ student.first_name }}</th>
                         <td>{{ student.last_name }}</td>
                         <td>{{ student.second_name }}</td>
                         <td>{{ student.stud_id }}</td>
                         <td>{{ student.group }}</td>
+
                     </tr>
                     </tbody>
                 </table>
+                 </form>
             </div>
         </div>
     </div>
+    <form v-on:submit.prevent="createStudent">
+        Создать студента
+        <br>
+        First name<input type="text" name="first_name" v-model="first_name">
+        <br>
+        Last name<input type="text" name="last_name" v-model="last_name">
+        <br>
+        Second name<input type="text" name="second_name" v-model="second_name">
+        <br>
+        Student id<input type="text" name="student_id" v-model="student_id">
+        <br>
+        Group name<input type="text" name="group_name" v-model="group_name">
+        <br>
+        <input type="submit" value = "Создать">
+    </form>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
@@ -68,6 +89,7 @@ var app = new Vue({
     students: [],
     groups: [],
     temp: [],
+    num: '1',
     message: 'Hello from Vue!'
   },
   methods: {
@@ -90,13 +112,25 @@ var app = new Vue({
         });
     },
     testGroup: function() {
-        axios.get('/group/<int:group_id>')
+        axios.get('/group/1')
           .then((response) => {
             this.temp = response.data;
           })
           .catch((error) => {
           console.log(error);
         });
+    },
+    readStudent: function(event) {
+        axios.get('/student/1')
+        .then((response) => {
+            this.temp = event;
+        })
+         .catch((error) => {
+          console.log(error);
+          });
+    },
+    createStudent: function(event) {
+        axios.post('/createStudent/')
     }
   },
     mounted() {

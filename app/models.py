@@ -21,7 +21,7 @@ class Student(db.Model):
         return result
 
     def to_dict(self):
-        return {'id': self.id, 'first_name': self.first_name, 'last_name': self.last_name, 'second_name': self.second_name, 'group': str(self.group)}
+        return {'id': self.id, 'first_name': self.first_name, 'last_name': self.last_name, 'second_name': self.second_name, 'group': str(self.group), 'stud_id': self.stud_id }
 
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
