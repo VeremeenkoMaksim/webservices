@@ -61,7 +61,7 @@ class StudentsResource(Resource):
         for g in groups:
             if data['group'] == g.name:
                 group = g
-        if group['name'] == '':
+        if group.name == '':
             return {'success': False}
         s = Student(last_name=data['last_name'], first_name=data['first_name'], second_name=data['second_name'], stud_id=data['stud_id'])
         s.group = group
