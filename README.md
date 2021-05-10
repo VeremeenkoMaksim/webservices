@@ -1,2 +1,3 @@
 # webservices
-https://flask-sqlalchemy.palletsprojects.com/en/2.x/contexts/
+#Группа ИВТ-17
+Вариант 1. Веремеенко Максим и Кононов Виктор
