@@ -37,6 +37,6 @@ def create_app():
     api.add_resource(GroupsResource, '/group/')
     api.add_resource(GroupResource, '/group/<int:group_id>/')
     api.add_resource(StudentsResource, '/student/')
-    api.add_resource(StudentResource, '/author/<int:student_id>/')
+    api.add_resource(StudentResource, '/student/<int:student_id>/')
 
     return app
